@@ -8,9 +8,12 @@
 
 ;; used by conman for hugsql connections
 (def db (atom nil))
-
 (def db-host (env/db :database-host))
 (def db-name (env/db :database-name))
+
+(defn mysql? []
+  (and (some? db-host) (some? db-name)))
+
 
 (if (nil? @db)
   (let [db-port (env/db :database-port)
@@ -22,8 +25,9 @@
                       "&useUnicode=yes&characterEncoding=utf8&useSSL=false")
                  "jdbc:h2:file:./analytics.db")]
 
+    ;; initialize database
     (println "Initializing databases")
-    (if (and (some? db-host) (some? db-name))
+    (if (mysql?)
       (reset! db (conman/connect!
                    {:init-size  1
                     :min-idle   1
@@ -37,6 +41,7 @@
                       (.setUser "sa")
                       (.setPassword ""))})))
 
+    ;; bind the sql scripts
     (conman/bind-connection
       @db
       "sql/users.sql"
@@ -76,3 +81,19 @@
         :user (env/db :database-user)
         :useSSL false
         :password (env/db :database-pass)}})
+
+
+(defn- create-tables-if-needed []
+  (try
+    (db-count-sites)
+    (println "Tables exist.")
+    (catch Exception e
+      (do
+        (println "Creating tables.")
+        (jdbc/db-do-commands @db (env/db-init-scripts))))))
+
+
+;; if h2 mode is on, we shall create the tables as well
+(if (not (mysql?))
+  (create-tables-if-needed))
+

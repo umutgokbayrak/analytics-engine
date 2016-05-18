@@ -40,6 +40,14 @@
           (:locale (:context data)))
 
         ;; record this op as new session (land)
+
+        (println "site-id:" (:site-id data))
+        (println "user-id:" (or (:user-id data) (:anonymous-id data)))
+        (println "session-id:" (:session-id data))
+        (println "hash-code:" (or (:hash-code data) (util/uuid)))
+        (println "channel:" (:channel data))
+        (println "page:" (:page data))
+
         (if (env/enabled? :session.op.saved)
           (ops/add-op!
             "session"

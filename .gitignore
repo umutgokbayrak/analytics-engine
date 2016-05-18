@@ -9,9 +9,6 @@ pom.xml.asc
 /.nrepl-port
 .hgignore
 .hg/
-<<<<<<< HEAD
 analytics.db.trace.db
-=======
 GeoIPASNumv6.dat
 GeoLiteCityv6.dat
->>>>>>> 2da17280865eb9169ab38d131b93e94c318288a2
