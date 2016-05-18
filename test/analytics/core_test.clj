@@ -1,6 +1,5 @@
 (ns analytics.core-test
   (:require [clojure.test :refer :all]
-<<<<<<< HEAD
             [analytics.utils :as util]
             [analytics.api.core :refer :all]))
 
@@ -75,14 +74,7 @@
 ;; (deftest identify-test
 ;;   (track data-identify))
 
-(track-test)
+;; (track-test)
 ;; (identify-test)
 
 ; (keys (:properties data))
-=======
-            [analytics.core :refer :all]))
-
-(deftest conn-test
-  (testing "Connection is nil"
-    (is (some? (get-db)))))
->>>>>>> 2da17280865eb9169ab38d131b93e94c318288a2

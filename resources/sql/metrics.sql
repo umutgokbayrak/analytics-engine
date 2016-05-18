@@ -23,13 +23,9 @@ VALUES
 UPDATE metrics
 SET metric_value = metric_value + :incr_value
 WHERE id = :metric_id
-<<<<<<< HEAD
-
 
 -- :name db-get-all-metrics :? :*
 -- :doc retrieve all metrics
 SELECT * FROM metrics
 ORDER BY updated_at DESC
 LIMIT 50
-=======
->>>>>>> 2da17280865eb9169ab38d131b93e94c318288a2
