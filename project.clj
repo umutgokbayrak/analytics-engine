@@ -14,4 +14,5 @@
                  [digest "1.4.4"]
                  [compojure "1.5.0"]
                  [org.clojure/data.json "0.2.6"]]
+  :plugins [[lein-codox "0.9.5"]]
   :jvm-opts ["-server" "-Djava.net.preferIPv4Stack=true"])
