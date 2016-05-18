@@ -1,0 +1,29 @@
+{
+  ;; contexts
+  :app.context.saved true
+  :campaign.context.saved true
+  :device.context.saved true
+  :location.context.saved true
+  :network.context.saved true
+  :os.context.saved true
+  :page.context.saved true
+  :properties.saved true
+  :screen.context.saved true
+  :browser.context.saved true
+
+  ;; ops
+  :session.op.saved true
+  :event.op.saved true
+  :identify.op.saved false
+  :page.op.saved false
+  :screen.op.saved false
+  :start.op.saved false
+  :stop.op.saved false
+
+  ;; Metrics date prefixes
+  :all.time.prefix.saved false
+  :yearly.prefix.saved false
+  :monthly.prefix.saved false
+  :daily.prefix.saved true
+  :hourly.prefix.saved false
+}
