@@ -9,6 +9,7 @@ pom.xml.asc
 /.nrepl-port
 .hgignore
 .hg/
+analytics.db.mv.db
 analytics.db.trace.db
 GeoIPASNumv6.dat
 GeoLiteCityv6.dat
