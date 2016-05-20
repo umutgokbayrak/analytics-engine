@@ -25,7 +25,6 @@ AND user_id = :user_id
 AND created_at >= :begin_date
 AND created_at <= :end_date
 
-
 -- :name db-count-ops-by-user-date-type :? :1
 -- :doc count users given the user id.
 SELECT count(*) as num FROM ops
@@ -44,3 +43,10 @@ INSERT INTO ops
 VALUES (:op_type, :site_id, :user_id,
         :session_id, :hash_code, :channel, :page,
         :event, :created_at)
+
+-- :name db-op-by-hash-code :? :1
+-- :doc retrieve the op by hash code
+SELECT * FROM ops
+WHERE user_id = :user_id
+AND session_id = :session_id
+AND hash_code = :hash_code

@@ -1,4 +1,4 @@
-(defproject org.clojars.umutgokbayrak/analytics-engine "0.1.1"
+(defproject org.clojars.umutgokbayrak/analytics-engine "0.1.2"
   :description "General purpose analytics engine in Clojure"
   :url "https://github.com/umutgokbayrak/analytics-engine"
   :license {:name "Eclipse Public License"

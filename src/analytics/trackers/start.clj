@@ -9,23 +9,25 @@
 
 
 (defmethod track-op "start" [data]
-  (tc/user-session-prep data)
+  (try
+    (tc/user-session-prep data)
 
-  ;; Track metrics
-  (tc/track-metrics :start data)
+    ;; Track metrics
+    (tc/track-metrics :start data)
 
-  ;; Track Event
-  (if (env/enabled? :start.op.saved)
-    (let [op-id
-          (add-op!
-            "start"
-            (:site-id data)
-            (or (:user-id data) (:anonymous-id data))
-            (:session-id data)
-            (:asset-id data)
-            (:channel data)
-            (or (:page data) (:name data) (:screen data))
-            (:event data))]
-      (tp/track-properties op-id data)
-      op-id)
-    -1))
+    ;; Track Event
+    (if (env/enabled? :start.op.saved)
+      (let [op-id
+            (add-op!
+              "start"
+              (:site-id data)
+              (or (:user-id data) (:anonymous-id data))
+              (:session-id data)
+              (:asset-id data)
+              (:channel data)
+              (or (:page data) (:name data) (:screen data))
+              (:event data))]
+        (tp/track-properties op-id data)
+        op-id)
+      -1)
+    (catch Exception e (.printStackTrace e))))

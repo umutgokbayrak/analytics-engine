@@ -29,3 +29,6 @@
   (db-delete-site!
     {:site_id site-id}))
 
+
+(defn site-exists? [site-id]
+  (some? (db-site-by-id {:site_id site-id})))

@@ -9,23 +9,25 @@
 
 
 (defmethod track-op "page" [data]
-  (tc/user-session-prep data)
+  (try
+    (tc/user-session-prep data)
 
-  ;; Track metrics
-  (tc/track-metrics :page data)
+    ;; Track metrics
+    (tc/track-metrics :page data)
 
-  ;; Track Page
-  (if (env/enabled? :page.op.saved)
-    (let [op-id
-          (add-op!
-            "page"
-            (:site-id data)
-            (or (:user-id data) (:anonymous-id data))
-            (:session-id data)
-            (or (:hash-code data) (util/uuid))
-            (:channel data)
-            (:page data)
-            nil)]
-      (tp/track-properties op-id data)
-      op-id)
-    -1))
+    ;; Track Page
+    (if (env/enabled? :page.op.saved)
+      (let [op-id
+            (add-op!
+              "page"
+              (:site-id data)
+              (or (:user-id data) (:anonymous-id data))
+              (:session-id data)
+              (or (:hash-code data) (util/uuid))
+              (:channel data)
+              (:page data)
+              nil)]
+        (tp/track-properties op-id data)
+        op-id)
+      -1)
+    (catch Exception e (.printStackTrace e))))

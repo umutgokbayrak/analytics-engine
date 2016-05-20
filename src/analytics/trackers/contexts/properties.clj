@@ -13,7 +13,7 @@
           op-id
           (:type data)
           (:site-id data)
-          (:user-id data)
+          (or (:user-id data) (:anonymous-id data))
           (:session-id data)
           (:page data)
           (:event data)

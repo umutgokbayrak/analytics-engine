@@ -9,23 +9,25 @@
 
 
 (defmethod track-op "event" [data]
-  (tc/user-session-prep data)
+  (try
+    (tc/user-session-prep data)
 
-  ;; Track metrics
-  (tc/track-metrics :event data)
+    ;; Track metrics
+    (tc/track-metrics :event data)
 
-  ;; Track Event
-  (if (env/enabled? :event.op.saved)
-    (let [op-id
-          (add-op!
-            "event"
-            (:site-id data)
-            (or (:user-id data) (:anonymous-id data))
-            (:session-id data)
-            (or (:hash-code data) (util/uuid))
-            (:channel data)
-            (or (:page data) (:name data) (:screen data))
-            (:event data))]
-      (tp/track-properties op-id data)
-      op-id)
-    -1))
+    ;; Track Event
+    (if (env/enabled? :event.op.saved)
+      (let [op-id
+            (add-op!
+              "event"
+              (:site-id data)
+              (or (:user-id data) (:anonymous-id data))
+              (:session-id data)
+              (or (:hash-code data) (util/uuid))
+              (:channel data)
+              (or (:page data) (:name data) (:screen data))
+              (:event data))]
+        (tp/track-properties op-id data)
+        op-id)
+      -1)
+    (catch Exception e (.printStackTrace e))))

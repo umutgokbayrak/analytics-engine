@@ -9,26 +9,28 @@
 
 
 (defmethod track-op "stop" [data]
-  (tc/user-session-prep data)
+  (try
+    (tc/user-session-prep data)
 
-  ;; Track Event
-  (if (env/enabled? :stop.op.saved)
-    (let [op-id
-          (add-op!
-            "stop"
-            (:site-id data)
-            (or (:user-id data) (:anonymous-id data))
-            (:session-id data)
-            (:asset-id data)
-            (:channel data)
-            (or (:page data) (:name data) (:screen data))
-            (:event data))]
+    ;; Track Event
+    (if (env/enabled? :stop.op.saved)
+      (let [op-id
+            (add-op!
+              "stop"
+              (:site-id data)
+              (or (:user-id data) (:anonymous-id data))
+              (:session-id data)
+              (:asset-id data)
+              (:channel data)
+              (or (:page data) (:name data) (:screen data))
+              (:event data))]
 
-      ;; Track Properties
-      (tp/track-properties op-id data)
+        ;; Track Properties
+        (tp/track-properties op-id data)
 
-      ;; Track metrics and get duration from from asset-id
-      (tc/track-metrics :stop (assoc data :op-id op-id))
+        ;; Track metrics and get duration from from asset-id
+        (tc/track-metrics :stop (assoc data :op-id op-id))
 
-      op-id)
-    -1))
+        op-id)
+      -1)
+    (catch Exception e (.printStackTrace e))))

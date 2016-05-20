@@ -20,3 +20,11 @@
                   :event event
                   :created_at (Date.)})]
       (first (vals result))))
+
+(defn hash-exists?
+  [user-id session-id hash-code]
+  (some?
+    (db-op-by-hash-code
+      {:user_id user-id
+       :session_id session-id
+       :hash_code hash-code})))

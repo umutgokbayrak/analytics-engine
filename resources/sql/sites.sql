@@ -22,3 +22,8 @@ VALUES (:site_id, :domain_name, :created_at)
 DELETE FROM sites
 WHERE site_id = :site_id
 
+-- :name db-site-by-id :? :1
+-- :doc get a site by id
+SELECT * FROM sites
+WHERE site_id = :site_id
+
